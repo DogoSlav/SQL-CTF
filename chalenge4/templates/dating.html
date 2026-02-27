@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Seznamka</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <span>Přihlášen: <b>{{ session['username'] }}</b> (Věk: {{ age }})</span>
+        <div>
+            <a href="{{ url_for('settings') }}">Nastavení profilu</a>
+            <a href="{{ url_for('klub') }}" class="vip-link">🔥 Noční klub Karlíka</a>
+            <a href="{{ url_for('logout') }}">Odhlásit</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Otevřená diskuze</h2>
+        
+        <form method="POST" class="message-form">
+            <input type="text" name="message" placeholder="Napiš zprávu..." required autocomplete="off">
+            <input type="submit" value="Odeslat">
+        </form>
+
+        <div class="chat-box">
+            {% for row in messages %}
+                <p><strong>{{ row[0] }}:</strong> {{ row[1] }}</p>
+            {% else %}
+                <p>Zatím žádné zprávy.</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

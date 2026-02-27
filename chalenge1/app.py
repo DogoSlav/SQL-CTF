@@ -4,9 +4,13 @@ import os
 
 app = Flask(__name__)
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+DB_DIR = os.path.join(BASE_DIR, 'ctf.db')
+
 # Tato funkce potřebuje práva k zápisu, aby mohla DB vytvořit
 def init_db():
-    conn = sqlite3.connect('ctf.db')
+    conn = sqlite3.connect(DB_DIR)
     c = conn.cursor()
     c.execute('DROP TABLE IF EXISTS users')
     c.execute('''CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT, password TEXT)''')
@@ -14,7 +18,7 @@ def init_db():
     conn.commit()
     conn.close()
 
-if not os.path.exists('ctf.db'):
+if not os.path.exists(DB_DIR):
     init_db()
 else:
     init_db() 
@@ -29,7 +33,7 @@ def login():
         # 🛡️ OCHRANA PROTI ROZBITÍ DB: Připojení v Read-Only režimu
         # Použijeme URI formát a přidáme parametr ?mode=ro
         try:
-            conn = sqlite3.connect('file:ctf.db?mode=ro', uri=True)
+            conn = sqlite3.connect(f'file:{DB_DIR}?mode=ro', uri=True)
             c = conn.cursor()
 
             # Zranitelný dotaz zůstává

@@ -1,0 +1,32 @@
+body { font-family: sans-serif; background-color: #f0f0f0; margin: 0; padding: 0; }
+.center-body { display: flex; justify-content: center; align-items: center; height: 100vh; }
+.klub-body { background-color: #1a1a1a; color: white; }
+
+.login-box { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 300px; }
+input[type="text"], input[type="password"] { width: 100%; padding: 8px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+input[type="submit"] { width: 100%; padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 4px; cursor: pointer; }
+input[type="submit"]:hover { background-color: #0056b3; }
+
+.error { color: red; font-size: 0.9em; margin-bottom: 10px; word-wrap: break-word; white-space: pre-line;}
+.info-box { background-color: #d4edda; color: #155724; padding: 10px; border-radius: 4px; margin-bottom: 15px; white-space: pre-wrap; word-wrap: break-word;}
+
+.btn-secondary { display: block; text-align: center; background-color: #6c757d; color: white; text-decoration: none; padding: 10px; border-radius: 4px; margin-top: 10px;}
+.btn-secondary:hover { background-color: #5a6268; }
+
+.navbar { background-color: #333; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+.navbar a { color: white; text-decoration: none; margin-left: 15px; padding: 5px 10px; border-radius: 4px;}
+.navbar a:hover { background-color: #555; }
+.navbar .vip-link { background-color: #ffcc00; color: black; font-weight: bold; }
+.navbar .vip-link:hover { background-color: #e6b800; }
+
+.container { max-width: 800px; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+.klub-body .container { background: #333; box-shadow: 0 4px 15px rgba(255, 204, 0, 0.2); }
+
+.message-form { display: flex; gap: 10px; margin-bottom: 20px; }
+.message-form input[type="text"] { flex-grow: 1; margin: 0; }
+.message-form input[type="submit"] { width: auto; }
+
+.chat-box { border: 1px solid #eee; padding: 15px; height: 300px; overflow-y: auto; background: #fafafa; border-radius: 4px; }
+.chat-box p { margin: 5px 0; border-bottom: 1px solid #f0f0f0; padding-bottom: 5px;}
+
+.flag-box { font-family: monospace; font-size: 24px; background: #222; color: #00ff00; padding: 20px; border: 2px dashed #00ff00; display: inline-block; margin-top: 20px; }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Noční klub Karlíka</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="klub-body">
+    <div class="container" style="text-align: center; margin-top: 100px;">
+        {% if success %}
+            <h1 style="color: #ffcc00;">🎉 Vítej v nočním klubu Karlíka! 🎉</h1>
+            <p>Jsi dost starý/á na to, abys viděl/a naše tajemství.</p>
+            <div class="flag-box">
+                CTF{SQLi_M4st3r_Ag3_ByP4ss}
+            </div>
+
+
+            <IMG SRC="https://media1.tenor.com/m/ddoJlzp3hSEAAAAd/club-penguin-penguin.gif">
+            <IMG SRC="https://media1.tenor.com/m/TV60yDy4ctYAAAAd/club-penguin-meme-dancing-penguin.gif">
+        {% else %}
+            <h1 style="color: #ff4c4c;">⛔ Přístup odepřen</h1>
+            <p>Tvůj aktuální věk na profilu je: <b>{{ age }} let</b>.</p>
+            <p>Pro vstup do tohoto klubu musíš mít účet aktivní (nebo věk nastavený) na více než 18 let.</p>
+        {% endif %}
+        <br>
+        <a href="{{ url_for('dating') }}" class="btn-secondary" style="display:inline-block; margin-top: 20px;">Zpět na seznamku</a>
+    </div>
+</body>
+</html>

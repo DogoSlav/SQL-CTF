@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tajný Portál - CTF</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0; }
+        .login-box { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 300px; }
+        input[type="text"], input[type="password"] { width: 100%; padding: 8px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        input[type="submit"] { width: 100%; padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        input[type="submit"]:hover { background-color: #0056b3; }
+        .error { color: red; font-size: 0.9em; margin-bottom: 10px; word-wrap: break-word; white-space: pre-line;}
+        /* Styl pro celý levý box */
+        .blacklist-box {
+            background-color: #ffffff; /* Bílé pozadí, aby to ladilo s pravou stranou */
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Stejný stín jako má přihlašovací box */
+            font-family: sans-serif;
+        }
+
+        /* Nadpis */
+        .blacklist-box h3 {
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Nastavení seznamu */
+        .bad-words-list {
+            list-style-type: none; 
+            padding: 0;
+            margin: 0;
+            display: flex; 
+            flex-direction: column; /* HLAVNÍ ZMĚNA: Seřadí položky pod sebe jako do sloupce */
+            align-items: flex-start; /* Zajistí, aby štítky nebyly roztažené na celou šířku boxu */
+            gap: 11px; /* Nechá hezké mezery mezi jednotlivými řádky */
+        }
+
+        /* Styl samotných zakázaných slov (štítků) */
+        .bad-words-list li code {
+            background-color: #fee2e2; /* Světle červené varovné pozadí */
+            color: #b91c1c; /* Tmavě červený text */
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: monospace; /* Vzhled zdrojového kódu */
+            font-size: 14px;
+            border: 1px solid #fca5a5;
+        }
+    
+    </style>
+</head>
+<body>
+    <div class="blacklist-box">
+        <h3>Karlíkův blacklist slov:</h3>
+        <ul class="bad-words-list">
+            <li><code>OR</code></li>
+            <li><code>or</code></li>
+            <li><code>AND</code></li>
+            <li><code>and</code></li>
+            <li><code>UNION</code></li>
+            <li><code>union</code></li>
+            <li><code>SELECT</code></li>
+            <li><code>select</code></li>
+        </ul>
+    </div>
+    <div class="login-box">
+        <h2>Přihlášení</h2>
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+        <form method="POST">
+            <label for="username">Uživatelské jméno:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">Heslo:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <input type="submit" value="Vstoupit">
+        </form>
+    </div>
+</body>
+</html>

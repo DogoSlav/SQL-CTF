@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Nastavení</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <a href="{{ url_for('dating') }}">⬅ Zpět na seznamku</a>
+    </div>
+
+    <div class="container">
+        <h2>Nastavení účtu</h2>
+        <p>Zde si můžeš nastavit svůj kontaktní e-mail.</p>
+
+        {% if msg %}
+            <div class="info-box">{{ msg }}</div>
+        {% endif %}
+
+        <form method="POST">
+            <label for="email">E-mailová adresa:</label>
+            <input type="text" id="email" name="email" value="{{ email }}" placeholder="tomas@example.com">
+            <input type="submit" value="Uložit změny">
+        </form>
+    </div>
+</body>
+</html>
