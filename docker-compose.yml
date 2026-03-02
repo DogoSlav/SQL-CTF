@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  flask-app:
+    build: .
+    container_name: moje_flask_stranky
+    ports:
+      - "8000:8000" # Zpřístupní port 8000 z kontejneru ven na tvůj server
+    restart: always # Pokud spadne, nebo se restartuje server, kontejner se sám nahodí
