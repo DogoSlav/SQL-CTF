@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY') # Pro sessions
+app.secret_key = os.environ.get('SECRET_KEY', '020cb592ee5e0a5919a77eacb73bb0c2d8c55b8500a7c7b754d1402afd8fdc58') # Pro sessions
 
 # Bezpečnostní pojistka: Upozorní tě, pokud by klíč chyběl
 if not app.secret_key:
