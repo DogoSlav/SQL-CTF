@@ -7,6 +7,6 @@ __pycache__/
 *.db
 *.sqlite3
 
-app.zip
+*.zip
 
 test*.py
