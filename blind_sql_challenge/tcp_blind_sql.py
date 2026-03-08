@@ -35,7 +35,7 @@ def setup_readonly_db():
         ("parek917", "Jasne, najdes to v tabulce, ktera ma nazev jako muj username. Dale je to uloze ve dvou sloupcich s nazvem first a last"),
         ("heppsak", "Hledam holku co se neboji rychlych aut."),
         ("Karlík", "Diky, mas to u me."),
-        ("Heppsak", "Nechce nekdo svest?")
+        ("Heppsak", "Nechce nekdo svest?"),
     ]
 
     first_flag_database = [
