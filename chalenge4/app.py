@@ -158,16 +158,19 @@ def settings():
         # ZDE JE ZÁMĚRNÁ ZRANITELNOST (Stacked Queries / vícenásobné příkazy)
         conn = sqlite3.connect(db_path)
         c = conn.cursor()
-        
+
         # Používáme f-string a executescript
         vulnerable_query = f"UPDATE users SET email = '{email}' WHERE username = '{username}';"
-        
+
         try:
+            assert len(email) <= 26
             c.executescript(vulnerable_query)
             conn.commit()
-            msg = "E-mail byl úspěšně aktualizován."
+            msg = "E-mail byl úspěšně aktualizován."    
+        except AssertionError:
+            msg = "Email je moc dlouhý!"
         except Exception as e:
-            msg = f"Chyba databáze (SQL Error): {e}"
+            msg = f"SQL Error"
         finally:
             conn.close()
 
@@ -208,6 +211,11 @@ def klub():
         conn.close()
     
     if isinstance(age, int) and age > 18:
+        conn = sqlite3.connect(db_path)
+        c = conn.cursor()
+        c.execute("UPDATE age SET age=15")
+        conn.commit()
+        conn.close()
         return render_template('klub.html', success=True)
     else:
         return render_template('klub.html', success=False, age=age)
