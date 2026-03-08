@@ -31,31 +31,37 @@ def setup_readonly_db():
         ("Karlík", "Ahoj, parku"),
         ("parek917", "Ahoj, co potrebujes?"),
         ("Deep", "Nekdo lolko?"),
-        ("Karlík", "Potreboval bych zase... ty vis co...")
+        ("Karlík", "Potreboval bych zase... ty vis co..."),
         ("parek917", "Jasne, najdes to v tabulce, ktera ma nazev jako muj username. Dale je to uloze ve dvou sloupcich s nazvem first a last"),
-        ("heppsak", "Hledam holku co se neboji rychlych aut.")
-        ("Karlík", "Díky, mas to u me.")
+        ("heppsak", "Hledam holku co se neboji rychlych aut."),
+        ("Karlík", "Díky, mas to u me."),
     ]
 
     first_flag_database = [
         (FLAG[:16], "Druha cast vlajky se presunula z technickych duvodu do tabulky maintenance. Obsahuje sloupce flag a number. V tabulce maintenance se nachazi vice vlajek. Vase vlajka je v tabulce zde ulozena nekolikrat. Vase vlajka ma celkovy soucet u sloupce number 67.")
     ]
 
-    with open("data.json", "r", encoding="utf-8") as f:
+    with open(os.path.join(BASE_DIR, 'data.json'), "r", encoding="utf-8") as f:
         data = json.load(f)
-    maintenance_data = [
-        [(row["string"], row["cislo"]) for row in data]
-    ]
+    maintenance_data = [(row["string"], row["cislo"]) for row in data]
+    
 
-    cursor.executemany("INSERT INTO maintenance VALUES (?, ?)", maintenance_data)
+    cursor.executemany("INSERT INTO maintenance (flag, number) VALUES (?, ?)", maintenance_data)
 
     for frst, scnd in first_flag_database:
         cursor.execute("INSERT INTO parek917 (first, second) VALUES (?, ?)", (frst, scnd))
 
-    cursor.executemany("INSERT INTO messages (username, password) VALUES (?, ?)", first_messages)
+    cursor.executemany("INSERT INTO messages (username, message) VALUES (?, ?)", first_messages)
     
     conn.commit()
     conn.close()
+
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    c = cursor.execute("SELECT flag FROM maintenance GROUP BY flag HAVING SUM(number) = 67")
+    print(c.fetchall())
+
     print("[+] Databáze připravena.")
 
 class BlindSQLHandler(socketserver.BaseRequestHandler):
