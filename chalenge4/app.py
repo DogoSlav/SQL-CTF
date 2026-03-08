@@ -4,9 +4,16 @@ import random
 import string
 import os
 import re
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = 'super_tajny_klic_pro_ctf' # Pro sessions
+app.secret_key = os.environ.get('SECRET_KEY') # Pro sessions
+
+# Bezpečnostní pojistka: Upozorní tě, pokud by klíč chyběl
+if not app.secret_key:
+    raise ValueError("Chybí SECRET_KEY! Zkontroluj soubor .env.")
 
 # 1. Zjistí absolutní cestu ke složce, ve které se nachází tento soubor (app.py)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -39,7 +46,7 @@ def init_user_db(username, password):
     
     # Vložení uživatele a jeho výchozího věku (15)
     c.execute("INSERT INTO users (username, password, email) VALUES (?, ?, ?)", (username, password, ""))
-    c.execute("INSERT INTO age (username, age) VALUES (?, ?)", (username, 20))
+    c.execute("INSERT INTO age (username, age) VALUES (?, ?)", (username, 15))
     
     # Vložení falešných zpráv do seznamky, aby nevypadala prázdně
     dummy_messages = [

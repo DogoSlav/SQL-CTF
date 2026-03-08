@@ -39,18 +39,18 @@ def login():
 
             # Zranitelný dotaz zůstává
             first_password_query = c.execute("SELECT password FROM users WHERE username=?", (username,))
-            print("lol")
+
             query_output = first_password_query.fetchone()
-            print("lol2")
+
             if query_output is None:
                 error = "Neplatné přihlašovací údaje."
                 return render_template('login.html', error=error)
 
             user_password, = query_output
-            print(user_password)
+
 
             second_password_query = f'SELECT password FROM users WHERE username = "{username}" AND password = "{password}"'
-            print("lol3")
+
             c.execute(second_password_query)
 
             query_output = c.fetchone()
@@ -68,7 +68,7 @@ def login():
 
         except sqlite3.OperationalError as e:
             # Zachytíme chyby. Pokud se někdo pokusí o zápis do RO databáze, hodí to chybu.
-            error = f"{e}"
+            error = "SQL error"
         except Exception as e:
              error = f"Nastala nečekaná chyba, napiš do diskuze na KSI {e}"
         finally:
