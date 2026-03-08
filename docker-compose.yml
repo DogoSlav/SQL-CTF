@@ -1,9 +1,18 @@
 version: '3.8'
 
 services:
-  flask-app:
-    build: .
-    container_name: moje_flask_stranky
+  # ZDE JE TVOJE EXISTUJÍCÍ FLASK APLIKACE
+  flask_web:
+    build: ./flask_app
     ports:
-      - "8000:8000" # Zpřístupní port 8000 z kontejneru ven na tvůj server
-    restart: always # Pokud spadne, nebo se restartuje server, kontejner se sám nahodí
+      - "8000:8000" # Příklad existujícího portu
+
+  # ZDE PŘIDÁVÁME NOVOU CHALLENGE
+  blind_sql:
+    build: ./blind_sql_challenge
+    ports:
+      - "9999:9999" # Zpřístupníme port 9999 z kontejneru ven na server
+    environment:
+      - CHALLENGE_TOKEN=moje_ctf_session_2026
+      - CHALLENGE_FLAG=CTF{tcp_sock3t_bl1nd_sql_m4st3r}
+    restart: unless-stopped # Pokud by server spadl, Docker ho sám restartuje
