@@ -111,7 +111,7 @@ class BlindSQLHandler(socketserver.BaseRequestHandler):
                 except sqlite3.OperationalError:
                     self.send_msg("Ne (Nepovolená operace - databáze je read-only)")
                 except sqlite3.Error:
-                    self.send_msg("Ne (Chyba syntaxe)")
+                    self.send_msg("(Chyba syntaxe)")
 
         except socket.timeout:
             # 2. ZACHYCENÍ TIMEOUTU
