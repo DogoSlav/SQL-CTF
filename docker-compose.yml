@@ -13,6 +13,6 @@ services:
     ports:
       - "9999:9999" # Zpřístupníme port 9999 z kontejneru ven na server
     environment:
-      - CHALLENGE_TOKEN=moje_ctf_session_2026
+      - CHALLENGE_TOKEN=KSI_ctf_session_2026
       - CHALLENGE_FLAG=KSI{59e6dc2c4205a56e80ba}
     restart: unless-stopped # Pokud by server spadl, Docker ho sám restartuje
