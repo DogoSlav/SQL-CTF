@@ -5,7 +5,7 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Zkopírování našeho skriptu do kontejneru
-COPY tcp_blind_sql.py .
+COPY . .
 
 # Otevření portu 9999 pro komunikaci
 EXPOSE 9999
