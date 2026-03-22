@@ -9,7 +9,7 @@ HOST = "0.0.0.0"
 PORT = 9999
 UNIVERSAL_SESSION_TOKEN = os.getenv("CHALLENGE_TOKEN", "moje_ctf_session_2026")
 FLAG = os.getenv("CHALLENGE_FLAG", "KSI{error}")
-TIMEOUT_SECONDS = 60 
+TIMEOUT_SECONDS = 300 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_DIR = os.path.join(BASE_DIR, 'ctf.db')
@@ -23,18 +23,19 @@ def setup_readonly_db():
         
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
+    cursor.execute("PRAGMA case_sensitive_like = ON;")
     cursor.execute("CREATE TABLE messages (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL, message TEXT NOT NULL)")
     cursor.execute("CREATE TABLE parek917 (first TEXT, second)")
     cursor.execute("CREATE TABLE maintenance (id INTEGER PRIMARY KEY AUTOINCREMENT, flag TEXT NOT NULL, number NOT NULL)")
 
     first_messages = [
-        ("Karlík", "Ahoj, parku"),
+        ("Karlik", "Ahoj, parku"),
         ("parek917", "Ahoj, co potrebujes?"),
         ("Deep", "Nekdo lolko?"),
-        ("Karlík", "Potreboval bych zase... ty vis co..."),
-        ("parek917", "Jasne, najdes to v tabulce, ktera ma nazev jako muj username. Dale je to uloze ve dvou sloupcich s nazvem first a last"),
-        ("heppsak", "Hledam holku co se neboji rychlych aut."),
-        ("Karlík", "Diky, mas to u me."),
+        ("Karlik", "Potreboval bych zase... ty vis co..."),
+        ("parek917", "Jasne, najdes to v tabulce, ktera ma nazev jako muj username. Dale je to ulozene ve dvou sloupcich s nazvem first a last"),
+        ("Heppsak", "Hledam holku co se neboji rychlych aut."),
+        ("Karlik", "Diky, mas to u me."),
         ("Heppsak", "Nechce nekdo svest?"),
     ]
 
@@ -71,6 +72,11 @@ class BlindSQLHandler(socketserver.BaseRequestHandler):
             self.request.sendall((msg + "\n").encode('utf-8'))
         except Exception:
             pass
+    def send_msg2(self, msg):
+        try:
+            self.request.sendall((msg).encode('utf-8'))
+        except Exception:
+            pass
 
     def handle(self):
         # 1. NASTAVENÍ TIMEOUTU:
@@ -80,6 +86,7 @@ class BlindSQLHandler(socketserver.BaseRequestHandler):
         
         conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
         cursor = conn.cursor()
+        cursor.execute("PRAGMA case_sensitive_like = ON;")
 
         try:
             
@@ -88,7 +95,7 @@ class BlindSQLHandler(socketserver.BaseRequestHandler):
                 return
             
             while True:
-                self.send_msg("SQL> ")
+                self.send_msg2("SQL> ")
                 # Zde server čeká na data. Pokud uběhne 15 minut, skočí to do except socket.timeout
                 data = self.request.recv(4096).strip()
                 if not data: 
