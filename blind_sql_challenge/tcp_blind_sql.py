@@ -1,10 +1,9 @@
 import os
 import socketserver
 import sqlite3
-import socket  # Importujeme socket pro zachycení výjimky socket.timeout
+import socket
 import json
 
-# Konfigurace
 HOST = "0.0.0.0"
 PORT = 9999
 UNIVERSAL_SESSION_TOKEN = os.getenv("CHALLENGE_TOKEN", "moje_ctf_session_2026")
@@ -13,7 +12,6 @@ TIMEOUT_SECONDS = 300
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_DIR = os.path.join(BASE_DIR, 'ctf.db')
-# Cesta k souboru databáze
 DB_PATH = DB_DIR
 
 def setup_readonly_db():
@@ -79,9 +77,6 @@ class BlindSQLHandler(socketserver.BaseRequestHandler):
             pass
 
     def handle(self):
-        # 1. NASTAVENÍ TIMEOUTU:
-        # Pokud klient nepošle žádná data po dobu 900 vteřin,
-        # funkce self.request.recv() vyhodí výjimku socket.timeout
         self.request.settimeout(TIMEOUT_SECONDS)
         
         conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
@@ -96,10 +91,9 @@ class BlindSQLHandler(socketserver.BaseRequestHandler):
             
             while True:
                 self.send_msg2("SQL> ")
-                # Zde server čeká na data. Pokud uběhne 15 minut, skočí to do except socket.timeout
                 data = self.request.recv(4096).strip()
                 if not data: 
-                    break # Klient ukončil spojení standardně
+                    break
                 
                 query = data.decode('utf-8')
                 if query.lower() in ['exit', 'quit']:
@@ -121,19 +115,14 @@ class BlindSQLHandler(socketserver.BaseRequestHandler):
                     self.send_msg("(Chyba syntaxe)")
 
         except socket.timeout:
-            # 2. ZACHYCENÍ TIMEOUTU
-            # Dáme uživateli vědět, proč ho odpojujeme (dobrá praxe u CTF)
             self.send_msg("\nTimeout")
             print(f"[*] Klient {self.client_address} byl odpojen z důvodu timeoutu.")
             
         except ConnectionResetError:
-            # Uživatel násilně zavřel terminál
             pass
         except Exception as e:
             pass
         finally:
-            # Bez ohledu na to, zda došlo k timeoutu, chybě nebo normálnímu konci, 
-            # musíme zavřít spojení do DB.
             conn.close()
 
 if __name__ == "__main__":

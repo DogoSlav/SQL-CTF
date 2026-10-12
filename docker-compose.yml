@@ -1,18 +1,17 @@
 version: '3.8'
 
 services:
-  # ZDE JE TVOJE EXISTUJÍCÍ FLASK APLIKACE
+
   flask_web:
     build: ./flask_app
     ports:
-      - "8000:8000" # Příklad existujícího portu
+      - "8000:8000"
 
-  # ZDE PŘIDÁVÁME NOVOU CHALLENGE
   blind_sql:
     build: ./blind_sql_challenge
     ports:
-      - "9999:9999" # Zpřístupníme port 9999 z kontejneru ven na server
+      - "9999:9999"
     environment:
       - CHALLENGE_TOKEN=KSI_ctf_session_2026
       - CHALLENGE_FLAG=KSI{f4e2a1b9c7d0f3e6a5ba}
-    restart: unless-stopped # Pokud by server spadl, Docker ho sám restartuje
+    restart: unless-stopped

@@ -8,7 +8,6 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 DB_DIR = os.path.join(BASE_DIR, 'ctf.db')
 
-# Tato funkce potřebuje práva k zápisu, aby mohla DB vytvořit
 def init_db():
     conn = sqlite3.connect(DB_DIR)
     c = conn.cursor()
@@ -31,13 +30,10 @@ def login():
         username = request.form.get('username', '')
         password = request.form.get('password', '')
 
-        # 🛡️ OCHRANA PROTI ROZBITÍ DB: Připojení v Read-Only režimu
-        # Použijeme URI formát a přidáme parametr ?mode=ro
         try:
             conn = sqlite3.connect(f'file:{DB_DIR}?mode=ro', uri=True)
             c = conn.cursor()
 
-            # Zranitelný dotaz zůstává
             first_password_query = c.execute("SELECT password FROM users WHERE username=?", (username,))
 
             query_output = first_password_query.fetchone()
@@ -67,7 +63,7 @@ def login():
                 error = "Neplatné přihlašovací údaje."
 
         except sqlite3.OperationalError as e:
-            # Zachytíme chyby. Pokud se někdo pokusí o zápis do RO databáze, hodí to chybu.
+
             error = "SQL error"
         except Exception as e:
              error = f"Nastala nečekaná chyba, napiš do diskuze na KSI {e}"

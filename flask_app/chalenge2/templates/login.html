@@ -11,16 +11,15 @@
         input[type="submit"] { width: 100%; padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 4px; cursor: pointer; }
         input[type="submit"]:hover { background-color: #0056b3; }
         .error { color: red; font-size: 0.9em; margin-bottom: 10px; word-wrap: break-word; white-space: pre-line;}
-        /* Styl pro celý levý box */
+
         .blacklist-box {
-            background-color: #ffffff; /* Bílé pozadí, aby to ladilo s pravou stranou */
+            background-color: #ffffff;
             padding: 24px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Stejný stín jako má přihlašovací box */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
             font-family: sans-serif;
         }
 
-        /* Nadpis */
         .blacklist-box h3 {
             margin-top: 0;
             margin-bottom: 16px;
@@ -29,24 +28,22 @@
             color: #333;
         }
 
-        /* Nastavení seznamu */
         .bad-words-list {
             list-style-type: none; 
             padding: 0;
             margin: 0;
             display: flex; 
-            flex-direction: column; /* HLAVNÍ ZMĚNA: Seřadí položky pod sebe jako do sloupce */
-            align-items: flex-start; /* Zajistí, aby štítky nebyly roztažené na celou šířku boxu */
-            gap: 11px; /* Nechá hezké mezery mezi jednotlivými řádky */
+            flex-direction: column;
+            align-items: flex-start; 
+            gap: 11px; 
         }
 
-        /* Styl samotných zakázaných slov (štítků) */
         .bad-words-list li code {
-            background-color: #fee2e2; /* Světle červené varovné pozadí */
-            color: #b91c1c; /* Tmavě červený text */
+            background-color: #fee2e2; 
+            color: #b91c1c;
             padding: 4px 10px;
             border-radius: 6px;
-            font-family: monospace; /* Vzhled zdrojového kódu */
+            font-family: monospace;
             font-size: 14px;
             border: 1px solid #fca5a5;
         }

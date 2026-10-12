@@ -1,7 +1,6 @@
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from flask import Flask
 
-# Import tvých aplikací
 from chalenge1.app import app as site1_app
 from chalenge2.app import app as site2_app
 from chalenge3.app import app as site3_app
@@ -9,7 +8,6 @@ from chalenge4.app import app as site4_app
 
 main_app = Flask(__name__)
 
-# Zde se děje kouzlo - namapování cest
 application = DispatcherMiddleware(main_app, {
     '/nuioghabyiaw/site1': site1_app,
     '/nuioghabyiaw/site2': site2_app,
@@ -17,7 +15,6 @@ application = DispatcherMiddleware(main_app, {
     '/nuioghabyiaw/site4': site4_app
 })
 
-# Pro lokální testování (spustíš pomocí: python wsgi.py)
 if __name__ == '__main__':
     from werkzeug.serving import run_simple
     run_simple('localhost', 5000, application, use_reloader=True, use_debugger=True)
