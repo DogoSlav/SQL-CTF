@@ -31,7 +31,7 @@ def setup_readonly_db():
         ("parek917", "Ahoj, co potrebujes?"),
         ("Deep", "Nekdo lolko?"),
         ("Karlik", "Potreboval bych zase... ty vis co..."),
-        ("parek917", "Jasne, najdes to v tabulce, ktera ma nazev jako muj username. Dale je to ulozene ve dvou sloupcich s nazvem first a last"),
+        ("parek917", "Jasne, najdes to v tabulce, ktera ma nazev jako muj username. Dale je to ulozene ve dvou sloupcich s nazvem first a second"),
         ("Heppsak", "Hledam holku co se neboji rychlych aut."),
         ("Karlik", "Diky, mas to u me."),
         ("Heppsak", "Nechce nekdo svest?"),
