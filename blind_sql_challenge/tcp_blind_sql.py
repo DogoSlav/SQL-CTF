@@ -4,11 +4,11 @@ import sqlite3
 import socket
 import json
 
-HOST = "0.0.0.0"
-PORT = 9999
-UNIVERSAL_SESSION_TOKEN = os.getenv("CHALLENGE_TOKEN", "moje_ctf_session_2026")
-FLAG = os.getenv("CHALLENGE_FLAG", "KSI{error}")
-TIMEOUT_SECONDS = 300 
+HOST = os.getenv("BLIND_SQL_HOST", "0.0.0.0")
+PORT = int(os.getenv("BLIND_SQL_PORT", "9999"))
+UNIVERSAL_SESSION_TOKEN = os.environ["CHALLENGE_TOKEN"]
+FLAG = os.environ["CHALLENGE_FLAG"]
+TIMEOUT_SECONDS = int(os.getenv("BLIND_SQL_TIMEOUT_SECONDS", "300"))
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_DIR = os.path.join(BASE_DIR, 'ctf.db')

@@ -4,15 +4,10 @@ import random
 import string
 import os
 import re
-from dotenv import load_dotenv
-
-load_dotenv()
+from config import CHALLENGE4_FLAG, FLASK_DEBUG, FLASK_PORT, SECRET_KEY
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY', '020cb592ee5e0a5919a77eacb73bb0c2d8c55b8500a7c7b754d1402afd8fdc58')
-
-if not app.secret_key:
-    raise ValueError("Chybí SECRET_KEY! Zkontroluj soubor .env.")
+app.secret_key = SECRET_KEY
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -201,7 +196,7 @@ def klub():
         c.execute("UPDATE age SET age=15")
         conn.commit()
         conn.close()
-        return render_template('klub.html', success=True)
+        return render_template('klub.html', success=True, flag=CHALLENGE4_FLAG)
     else:
         return render_template('klub.html', success=False, age=age)
 
@@ -211,4 +206,4 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=FLASK_DEBUG, port=FLASK_PORT)

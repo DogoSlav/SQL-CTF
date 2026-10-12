@@ -1,6 +1,14 @@
 from flask import Flask, request, render_template
 import sqlite3
 import os
+from config import (
+    CHALLENGE3_ADMIN_PASSWORD,
+    CHALLENGE3_FLAG,
+    CHALLENGE3_KARLIK_PASSWORD,
+    FLASK_DEBUG,
+    FLASK_HOST,
+    FLASK_PORT,
+)
 
 app = Flask(__name__)
 
@@ -13,8 +21,8 @@ def init_db():
     c = conn.cursor()
     c.execute('DROP TABLE IF EXISTS users')
     c.execute('''CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT, password TEXT)''')
-    c.execute("INSERT INTO users (username, password) VALUES ('Karlik', 'Karlikovo_tajne_heslo_15311563')")
-    c.execute("INSERT INTO users (username, password) VALUES ('admin', 'super_tajne_heslo_123_ktere_nikdo_neuhodne_1564186165')")
+    c.execute("INSERT INTO users (username, password) VALUES (?, ?)", ('Karlik', CHALLENGE3_KARLIK_PASSWORD))
+    c.execute("INSERT INTO users (username, password) VALUES (?, ?)", ('admin', CHALLENGE3_ADMIN_PASSWORD))
     conn.commit()
     conn.close()
 
@@ -58,7 +66,7 @@ def login():
             control_user_password, = query_output
 
             if username == 'admin' and user_password == control_user_password:
-                return render_template('flag.html')
+                return render_template('flag.html', flag=CHALLENGE3_FLAG)
             else:
                 error = "Neplatné přihlašovací údaje."
 
@@ -75,4 +83,4 @@ def login():
     return render_template('login.html', error=error)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=FLASK_DEBUG, host=FLASK_HOST, port=FLASK_PORT)

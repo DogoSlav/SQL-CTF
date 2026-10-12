@@ -1,5 +1,6 @@
 import socket
 import sys
+import os
 
 class BlindSQLClient:
     def __init__(self, host, port, token):
@@ -52,9 +53,9 @@ class BlindSQLClient:
 
 
 if __name__ == "__main__":
-    HOST = "89.221.215.195"
-    PORT = 9999
-    TOKEN = "KSI_ctf_session_2026"
+    HOST = os.getenv("BLIND_SQL_SERVER_HOST", "89.221.215.195")
+    PORT = int(os.getenv("BLIND_SQL_PORT", "9999"))
+    TOKEN = os.environ["CHALLENGE_TOKEN"]
 
     client = BlindSQLClient(HOST, PORT, TOKEN)
 

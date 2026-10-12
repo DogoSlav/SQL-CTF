@@ -1,6 +1,13 @@
 from flask import Flask, request, render_template
 import sqlite3
 import os
+from config import (
+    CHALLENGE1_ADMIN_PASSWORD,
+    CHALLENGE1_FLAG,
+    FLASK_DEBUG,
+    FLASK_HOST,
+    FLASK_PORT,
+)
 
 app = Flask(__name__)
 
@@ -13,7 +20,7 @@ def init_db():
     c = conn.cursor()
     c.execute('DROP TABLE IF EXISTS users')
     c.execute('''CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT, password TEXT)''')
-    c.execute("INSERT INTO users (username, password) VALUES ('admin', 'super_tajne_heslo_123_ktere_nikdo_neuhodne')")
+    c.execute("INSERT INTO users (username, password) VALUES (?, ?)", ('admin', CHALLENGE1_ADMIN_PASSWORD))
     conn.commit()
     conn.close()
 
@@ -40,7 +47,7 @@ def login():
             user = c.fetchone()
 
             if user:
-                return render_template('flag.html')
+                return render_template('flag.html', flag=CHALLENGE1_FLAG)
             else:
                 error += "Neplatné přihlašovací údaje."
 
@@ -56,4 +63,4 @@ def login():
     return render_template('login.html', error=error)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=FLASK_DEBUG, host=FLASK_HOST, port=FLASK_PORT)
