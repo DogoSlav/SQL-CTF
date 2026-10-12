@@ -4,14 +4,15 @@ services:
 
   flask_web:
     build: ./flask_app
+    env_file:
+      - .env
     ports:
       - "8000:8000"
 
   blind_sql:
     build: ./blind_sql_challenge
+    env_file:
+      - .env
     ports:
       - "9999:9999"
-    environment:
-      - CHALLENGE_TOKEN=KSI_ctf_session_2026
-      - CHALLENGE_FLAG=KSI{f4e2a1b9c7d0f3e6a5ba}
     restart: unless-stopped
